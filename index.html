@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendario SKZOO 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{--bg:#f1efff;--card:#fff;--ink:#23223a;--mute:#6b6a85;--sun:#c92a62;--line:#e4e1fa;--on:#23223a;--ev:#e0245e;--tk:#2563eb;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171627;--card:#222139;--ink:#f1efff;--mute:#a9a7c6;--sun:#ff8fb1;--line:#34324f;--ev:#ff6b97;--tk:#6ea0ff}}
+:root[data-theme="dark"]{--bg:#171627;--card:#222139;--ink:#f1efff;--mute:#a9a7c6;--sun:#ff8fb1;--line:#34324f;--ev:#ff6b97;--tk:#6ea0ff}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;line-height:1.4;overflow-x:clip}
+button,input,select{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.hero{text-align:center;padding:48px 16px 20px}
+.hero h1{margin:0;font-family:"Baloo 2","Nunito",sans-serif;font-weight:800;font-size:clamp(3rem,13vw,7rem);line-height:1;display:flex;justify-content:center;gap:.08em;flex-wrap:wrap}
+.hero h1 span{background:var(--c);color:#23223a;padding:0 .22em;border-radius:.28em;border:3px solid #23223a;box-shadow:5px 5px 0 #23223a;transform:rotate(-3deg)}
+.hero h1 span:nth-child(even){transform:rotate(3deg) translateY(.06em)}
+.hero h1 em{font-style:normal;width:100%;font-size:.5em;margin-top:.25em;letter-spacing:.06em}
+.hero p{margin:18px auto 0;max-width:46ch;color:var(--mute);font-weight:700}
+.zoo{font-size:clamp(1.3rem,6vw,2rem);margin-top:12px;letter-spacing:.2em;white-space:nowrap}
+.agenda{max-width:720px;margin:12px auto 8px;padding:16px;background:var(--card);border:3px solid var(--ink);border-radius:22px;width:calc(100% - 32px)}
+.agenda header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.agenda h2{margin:0;font-family:"Baloo 2","Nunito",sans-serif;font-size:1.6rem}
+.agenda label{font-weight:700;font-size:.9rem;display:flex;gap:6px;align-items:center}
+.lista{list-style:none;margin:8px 0 0;padding:0}
+.it{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:2px dashed var(--line)}
+.it:first-child{border-top:0}
+.it input{width:20px;height:20px;accent-color:var(--tk);flex:none}
+.mk{width:14px;height:14px;border-radius:50%;background:var(--ev);flex:none;margin:0 3px}
+.tx{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:700}
+.ok .tx{text-decoration:line-through;opacity:.55}
+.hr{color:var(--mute);font-weight:700;font-size:.85rem}
+.lk{border:2px solid var(--line);background:none;border-radius:99px;padding:2px 10px;cursor:pointer;font-weight:700;font-size:.8rem}
+.del{border:0;background:none;color:var(--mute);cursor:pointer;padding:10px 12px;font-size:1rem}
+.vacio{color:var(--mute);padding:8px 0}
+.estado{margin:10px 0 0;font-size:.8rem;color:var(--mute)}
+main{max-width:1320px;margin:0 auto;padding:20px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:28px}
+.mes{position:relative;background:var(--card);border:3px solid var(--c);border-radius:22px;padding:0 14px 14px;transform:rotate(var(--r));break-inside:avoid}
+.mes header{display:flex;align-items:center;justify-content:space-between;background:var(--c);color:#23223a;margin:-3px -17px 10px;padding:6px 18px;border-radius:20px 20px 0 0}
+.mes h2{margin:0;font-family:"Baloo 2","Nunito",sans-serif;font-weight:800;font-size:1.7rem}
+.st{font-size:2.4rem;line-height:1;margin:-18px -6px -14px 0;transform:rotate(12deg);filter:drop-shadow(2px 3px 0 rgba(0,0,0,.18))}
+ol.sem,ol.cal{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.sem li{font-weight:800;font-size:.8rem;color:var(--mute);padding:2px 0}
+.sem li:nth-child(7){color:var(--sun)}
+.day{position:relative;width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border:0;background:none;border-radius:50%;padding:0;cursor:pointer;font-weight:700;font-size:.95rem;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.day:hover{background:var(--line)}
+.cal li:nth-child(7n) .day:not(.bd):not(.deb){color:var(--sun)}
+.day.bd,.day.deb{background:var(--c);color:#23223a;font-weight:800}
+.day.deb{border-radius:30%;outline:2px dashed #23223a;outline-offset:-3px}
+.day.bd:hover,.day.deb:hover{filter:brightness(.93)}
+.day.hoy{box-shadow:inset 0 0 0 3px var(--ink)}
+.dots{position:absolute;bottom:2px;left:0;right:0;display:flex;justify-content:center;gap:2px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--ev);box-shadow:0 0 0 1px var(--card)}
+.dots i.t{background:var(--tk);border-radius:2px}
+.dots i.ok{opacity:.35}
+.n{list-style:none;margin:10px 0 0;padding:10px 0 0;border-top:2px dashed var(--line);font-size:.85rem;font-weight:700}
+dialog{border:3px solid var(--ink);border-radius:22px;background:var(--card);color:var(--ink);padding:18px;width:min(460px,94vw);max-height:90vh;max-height:90dvh;overflow:auto}
+dialog::backdrop{background:rgba(20,18,40,.6)}
+dialog h3{margin:0;font-family:"Baloo 2","Nunito",sans-serif;font-size:1.5rem;text-transform:capitalize}
+#dn{margin:0;font-weight:700;color:var(--mute)}
+.fm{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.fm input,.fm select{padding:10px;border:2px solid var(--line);border-radius:12px;background:var(--bg);min-width:0;font-size:16px}
+.fm #ft{grid-column:1/-1}
+.fm .ad{grid-column:1/-1;padding:10px;border:2px solid #23223a;border-radius:12px;background:#ff9eb5;color:#23223a;font-weight:800;cursor:pointer;box-shadow:3px 3px 0 #23223a}
+.cerrar{margin-top:14px;width:100%;padding:8px;border:2px solid var(--line);border-radius:12px;background:none;cursor:pointer;font-weight:700}
+footer{text-align:center;color:var(--mute);font-size:.85rem;padding:24px 16px 40px}
+@media (max-width:520px){.mes{transform:none;padding:0 10px 12px}.mes header{margin:-3px -13px 8px}.hero{padding-top:32px}.hero h1 span{box-shadow:3px 3px 0 #23223a;border-width:2px}.agenda{padding:12px;width:calc(100% - 24px)}main{padding:12px;gap:20px}dialog{margin:auto 0 0;width:100%;max-width:100%;border-radius:22px 22px 0 0;border-bottom:0;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}}
+@media print{body{background:#fff}.agenda,dialog{display:none}.mes{transform:none}main{grid-template-columns:repeat(3,1fr);gap:12px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1 aria-label="SKZOO 2027">
+<span style="--c:#ff9eb5">S</span><span style="--c:#ffd166">K</span><span style="--c:#8fd3ff">Z</span><span style="--c:#b8f0a8">O</span><span style="--c:#c9a7ff">O</span><em>2027</em>
+</h1>
+<p>Toca cualquier día para agregar eventos o tareas. Los cumpleaños de los chicos ya están marcados.</p>
+<div class="zoo" aria-hidden="true">🐺🐰🐷🐥🐿️🦊🐶🐹</div>
+</div>
+
+<section class="agenda" aria-labelledby="ta">
+<header>
+<h2 id="ta">Mi agenda</h2>
+<label><input type="checkbox" id="pend"> Ocultar tareas hechas</label>
+</header>
+<ul class="lista" id="ag"></ul>
+<p class="estado" id="estado" role="status"></p>
+</section>
+
+<main id="meses"></main>
+
+<dialog id="dlg" aria-labelledby="dt">
+<h3 id="dt"></h3>
+<p id="dn"></p>
+<ul class="lista" id="dl"></ul>
+<form class="fm" id="f">
+<select id="fk" aria-label="Tipo">
+<option value="e">Evento</option>
+<option value="t">Tarea</option>
+</select>
+<input type="time" id="fh" aria-label="Hora (opcional)">
+<input type="text" id="ft" maxlength="120" required placeholder="Ej: Concierto, comprar lightstick…" aria-label="Descripción">
+<button class="ad" type="submit">Agregar</button>
+</form>
+<button class="cerrar" type="button" id="cerrar">Cerrar</button>
+</dialog>
+
+<footer>🎂 cumpleaños, ⭐ aniversario de debut (25 de marzo). Fan art inspirado en SKZOO, no es un producto oficial.</footer>
+
+<script>
+(function(){
+const MES=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const ANI=["🐺","🐰","🐷","🐥","🐿️","🦊","🐶","🐹","🐻","🐱","🐼","🐨"];
+const COL=["#ff9eb5","#ffd166","#8fd3ff","#b8f0a8","#c9a7ff","#ff9f7a","#7ee0d0","#f7b2f0","#ffe27a","#9ab6ff","#ffb36b","#a5e6ff"];
+const FIX={"02-08":["bd","I.N"],"03-20":["bd","Hyunjin"],"03-25":["deb","Aniversario de debut"],"08-11":["bd","Changbin"],"09-15":["bd","Felix"],"09-22":["bd","Seungmin"],"10-03":["bd","Bang Chan"],"10-25":["bd","Lee Know"],"12-14":["bd","Han"]};
+const LS="skzoo2027";
+let items=[],ref=null,openKey=null,timer=null;
+const $=s=>document.querySelector(s);
+const dlg=$("#dlg");
+const pad=n=>String(n).padStart(2,"0");
+const key=(m,d)=>"2027-"+pad(m+1)+"-"+pad(d);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const dateOf=k=>{const p=k.split("-").map(Number);return new Date(p[0],p[1]-1,p[2])};
+const long=k=>dateOf(k).toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"});
+const short=k=>dateOf(k).toLocaleDateString("es",{day:"numeric",month:"short"});
+const cmp=(a,b)=>a.date.localeCompare(b.date)||(a.time||"99").localeCompare(b.time||"99");
+const say=t=>{$("#estado").textContent=t};
+
+function el(t,a,...c){
+const e=document.createElement(t);
+for(const k in a||{}){
+if(k==="class")e.className=a[k];
+else if(k.startsWith("on"))e.addEventListener(k.slice(2),a[k]);
+else e.setAttribute(k,a[k])
+}
+c.flat().forEach(x=>e.append(x));
+return e
+}
+
+const clean=l=>Array.isArray(l)?l.filter(i=>i&&typeof i.date==="string"&&typeof i.text==="string"):[];
+try{items=clean(JSON.parse(localStorage.getItem(LS)||"[]"))}catch(e){items=[]}
+
+function save(){
+clearTimeout(timer);
+timer=setTimeout(async()=>{
+try{localStorage.setItem(LS,JSON.stringify(items))}catch(e){}
+if(ref){
+try{await ref.set({items});say("Guardado")}
+catch(e){say("Guardado solo en este navegador")}
+}else say("Guardado en este navegador");
+},300)
+}
+
+function renderMonths(){
+const now=new Date(),hoy=now.getFullYear()+"-"+pad(now.getMonth()+1)+"-"+pad(now.getDate());
+const by={};
+items.forEach(i=>(by[i.date]=by[i.date]||[]).push(i));
+let h="";
+
+for(let m=0;m<12;m++){
+const first=(new Date(2027,m,1).getDay()+6)%7,n=new Date(2027,m+1,0).getDate();
+let cells="<li></li>".repeat(first),notes="";
+
+for(let d=1;d<=n;d++){
+const k=key(m,d),fx=FIX[k.slice(5)],its=by[k]||[];
+if(fx)notes+="<li>"+(fx[0]==="bd"?"🎂 ":"⭐ ")+d+": "+(fx[0]==="bd"?"Cumpleaños de ":"")+fx[1]+"</li>";
+const dots=its.length?'<span class="dots">'+its.slice(0,3).map(i=>'<i class="'+i.type+(i.done?" ok":"")+'"></i>').join("")+"</span>":"";
+cells+='<li><button type="button" class="day'+(fx?" "+fx[0]:"")+(k===hoy?" hoy":"")+'" data-d="'+k+'" aria-label="'+d+" de "+MES[m].toLowerCase()+(its.length?", "+its.length+(its.length>1?" elementos":" elemento"):"")+'">'+d+dots+"</button></li>";
+}
+
+h+='<section class="mes" style="--c:'+COL[m]+";--r:"+(m%2?2:-2)+'deg"><header><h2>'+MES[m]+'</h2><span class="st" aria-hidden="true">'+ANI[m]+'</span></header><ol class="sem"><li>L</li><li>M</li><li>X</li><li>J</li><li>V</li><li>S</li><li>D</li></ol><ol class="cal">'+cells+"</ol>"+(notes?'<ul class="n">'+notes+"</ul>":"")+"</section>";
+}
+$("#meses").innerHTML=h;
+}
+
+function row(i,showDate){
+const li=el("li",{class:"it "+i.type+(i.done?" ok":"")});
+if(i.type==="t"){
+const c=el("input",{type:"checkbox","aria-label":"Marcar como hecha"});
+c.checked=!!i.done;
+c.addEventListener("change",()=>{i.done=c.checked;save();render()});
+li.append(c)
+}else li.append(el("span",{class:"mk","aria-hidden":"true"}));
+
+const tx=el("span",{class:"tx"});
+tx.textContent=i.text;
+li.append(tx);
+if(i.time)li.append(el("span",{class:"hr"},i.time));
+if(showDate)li.append(el("button",{class:"lk",type:"button",onclick:()=>openDay(i.date)},short(i.date)));
+li.append(el("button",{class:"del",type:"button","aria-label":"Borrar",onclick:()=>{items=items.filter(x=>x!==i);save();render()}},"✕"));
+return li;
+}
+
+function renderAgenda(){
+const ul=$("#ag"),hide=$("#pend").checked;
+ul.replaceChildren();
+const list=items.filter(i=>!(hide&&i.type==="t"&&i.done)).sort(cmp);
+if(!list.length)ul.append(el("li",{class:"vacio"},"Aún no hay nada. Toca un día del calendario para agregar un evento o una tarea."));
+list.forEach(i=>ul.append(row(i,true)));
+}
+
+function renderDay(){
+const k=openKey,fx=FIX[k.slice(5)],ul=$("#dl");
+$("#dt").textContent=long(k);
+$("#dn").textContent=fx?(fx[0]==="bd"?"🎂 Cumpleaños de ":"⭐ ")+fx[1]:"";
+ul.replaceChildren();
+const list=items.filter(i=>i.date===k).sort(cmp);
+if(!list.length)ul.append(el("li",{class:"vacio"},"Nada para este día todavía."));
+list.forEach(i=>ul.append(row(i,false)));
+}
+
+function render(){
+renderMonths();
+renderAgenda();
+if(openKey&&dlg.open)renderDay()
+}
+
+function openDay(k){
+openKey=k;
+renderDay();
+if(!dlg.open)dlg.showModal();
+$("#ft").focus()
+}
+
+$("#meses").addEventListener("click",e=>{
+const b=e.target.closest("button.day");
+if(b)openDay(b.dataset.d)
+});
+
+$("#pend").addEventListener("change",renderAgenda);
+$("#cerrar").addEventListener("click",()=>dlg.close());
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+
+$("#f").addEventListener("submit",e=>{
+e.preventDefault();
+const t=$("#ft").value.trim();
+if(!t)return;
+items.push({id:uid(),date:openKey,type:$("#fk").value,text:t.slice(0,120),time:$("#fh").value,done:false});
+$("#ft").value="";
+$("#fh").value="";
+save();
+render();
+$("#ft").focus();
+});
+
+async function initDb(){
+try{
+if(!window.claude)return;
+const r=await Promise.all([claude.use("db"),claude.use("user")]);
+if(!r[0]||!r[1])return;
+const id=await r[1].id();
+if(!id)return;
+ref=r[0].doc("data/users/"+id+"/events");
+const s=await ref.get();
+if(s.exists){
+const d=s.data();
+if(d&&Array.isArray(d.items)){items=clean(d.items);render()}
+}else if(items.length)save();
+}catch(e){ref=null}
+}
+
+render();
+say("Guardado en este navegador");
+initDb();
+})();
+</script>
+</body>
+</html>
